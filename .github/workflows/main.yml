@@ -13,5 +13,3 @@ jobs:
           REMOTE_REPO: "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
         run: |
           git push "${REMOTE_REPO}" HEAD:branch-$(uuidgen)
-          git commit -m "Trigger CI?" --allow-empty
-          git push "${REMOTE_REPO}" HEAD:branch-$(uuidgen)
