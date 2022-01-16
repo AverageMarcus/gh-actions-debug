@@ -13,9 +13,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Get branch
+        run: |
+          echo "${{inputs.branch}}"
+          echo "${{github.ref}}"
       - uses: actions/checkout@v2
         with:
-          ref: "${{inputs.ref || github.ref }}"
+          ref: "${{inputs.branch || github.ref }}"
       - name: Run a one-line script
         run: |
           git show --format=fuller HEAD
