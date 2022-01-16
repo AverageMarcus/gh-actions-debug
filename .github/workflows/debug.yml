@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          ref: "${{inputs.ref || context.github.ref }}"
+          ref: "${{inputs.ref || github.ref }}"
       - name: Run a one-line script
         run: |
           git show --format=fuller HEAD
