@@ -16,4 +16,4 @@ jobs:
   trigger_wf:
     needs:
       - build
-    uses: AverageMarcus/gh-actions-debug/.github/workflows/debug.yml@latest
+    uses: AverageMarcus/gh-actions-debug/.github/workflows/debug.yml@main
