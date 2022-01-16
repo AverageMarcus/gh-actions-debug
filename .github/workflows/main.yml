@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 env:
-  branch: branch-$(uuidgen)
+  BRANCH: branch-$(uuidgen)
 
 jobs:
   build:
@@ -15,10 +15,10 @@ jobs:
         env:
           REMOTE_REPO: "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
         run: |
-          git push "${REMOTE_REPO}" HEAD:${{ env.branch }}
+          git push "${REMOTE_REPO}" HEAD:${{ env.BRANCH }}
   trigger_wf:
     needs:
       - build
     uses: AverageMarcus/gh-actions-debug/.github/workflows/debug.yml@main
     with:
-      branch: ${{ env.branch }}
+      branch: ${{ env.BRANCH }}
