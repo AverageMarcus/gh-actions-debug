@@ -7,10 +7,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     outputs:
-      branch: ${{ steps.build.outputs.branch }}
+      branch: ${{ steps.new_branch.outputs.branch }}
     steps:
       - uses: actions/checkout@v2
       - name: New branch
+        id: new_branch
         env:
           REMOTE_REPO: "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
         run: |
