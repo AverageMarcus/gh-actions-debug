@@ -3,22 +3,23 @@ name: Create Branch
 on:
   workflow_dispatch:
 
-env:
-  BRANCH: branch-$(uuidgen)
-
 jobs:
   build:
     runs-on: ubuntu-latest
+    outputs:
+      branch: ${{ steps.build.outputs.branch }}
     steps:
       - uses: actions/checkout@v2
       - name: New branch
         env:
           REMOTE_REPO: "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
         run: |
-          git push "${REMOTE_REPO}" HEAD:${{ env.BRANCH }}
+          branch="branch-$(uuidgen)"
+          git push "${REMOTE_REPO}" HEAD:${branch}
+          echo "::set-output name=branch::${branch}"
   trigger_wf:
     needs:
       - build
     uses: AverageMarcus/gh-actions-debug/.github/workflows/debug.yml@main
     with:
-      branch: ${{ env.BRANCH }}
+      branch: ${{ needs.build.outputs.branch }}
