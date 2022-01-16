@@ -13,4 +13,7 @@ jobs:
           REMOTE_REPO: "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
         run: |
           git push "${REMOTE_REPO}" HEAD:branch-$(uuidgen)
-      - uses: AverageMarcus/gh-actions-debug/.github/workflows/debug.yml@latest
+  trigger_wf:
+    needs:
+      - build
+    uses: ${{ github.repository }}/.github/workflows/debug.yml@latest
