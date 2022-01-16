@@ -3,6 +3,9 @@ name: Create Branch
 on:
   workflow_dispatch:
 
+env:
+  branch: branch-$(uuidgen)
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -12,8 +15,10 @@ jobs:
         env:
           REMOTE_REPO: "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
         run: |
-          git push "${REMOTE_REPO}" HEAD:branch-$(uuidgen)
+          git push "${REMOTE_REPO}" HEAD:${{ env.branch }}
   trigger_wf:
     needs:
       - build
     uses: AverageMarcus/gh-actions-debug/.github/workflows/debug.yml@main
+    with:
+      branch: ${{ env.branch }}
