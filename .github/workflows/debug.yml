@@ -1,6 +1,10 @@
 name: Debug CI
 on:
   workflow_call:
+    inputs:
+      branch:
+        required: true
+        type: string
   push:
     branches:
       - 'branch-*'
@@ -10,6 +14,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          ref: "${{inputs.ref || context.github.ref }}"
       - name: Run a one-line script
         run: |
           git show --format=fuller HEAD
